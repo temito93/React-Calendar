@@ -17,17 +17,22 @@ function App() {
 
   return (
     <div className="app-calendar_container">
-      {!date && (
-        <label
-          htmlFor="date"
-          className={`${focused ? "label_onFocused" : "label_onBlur"}`}
-        >
-          Od kiedy wolne
-        </label>
-      )}
+      <label
+        htmlFor="date"
+        className={`${focused && "label_onFocused"} ${
+          !focused && "label_onBlur"
+        }`}
+      >
+        Od kiedy wolne
+      </label>
       <DatePicker
         customInput={
-          <InputMask mask="99.99.9999" maskPlaceholder="dd.mm.rrrr" />
+          <InputMask
+            mask="99.99.9999"
+            maskPlaceholder="dd.mm.rrrr"
+            alwaysShowMask={focused ? true : false}
+            style={{ paddingTop: "20px" }}
+          />
         }
         ref={inputDate}
         dateFormatCalendar={"MMM yyyy"}
@@ -40,8 +45,6 @@ function App() {
         maxDate={new Date("12-31-2030")}
         name="date"
         onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        className={`${date && "clearInput"}`}
         locale={pl}
         formatWeekDay={(nameOfDay) =>
           nameOfDay === "poniedziałek"
